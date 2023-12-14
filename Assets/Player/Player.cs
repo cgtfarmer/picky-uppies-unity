@@ -16,4 +16,10 @@ public class Player: ScriptableObject {
   [Range(0, 25)]
   [Tooltip("Movement speed")]
   public float moveSpeed;
+
+  public Vector2 movement;
+
+  public void SetMovement(float horizontal, float vertical) {
+    this.movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+  }
 }

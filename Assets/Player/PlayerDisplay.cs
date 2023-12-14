@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class PlayerDisplay: MonoBehaviour {
 
   public Player player;
 
-  void Start() {
-    this.GetComponent<SpriteRenderer>().color = this.player.color;
-  }
+  private SpriteRenderer spriteRenderer;
 
-  void Update() {
+  void Start() {
+    this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+
+    Assert.IsNotNull(this.player);
+    Assert.IsNotNull(this.spriteRenderer);
+
+    this.spriteRenderer.color = this.player.color;
   }
 
   void OnDrawGizmosSelected() {

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using TMPro;
-using System;
 
 public class CounterDisplay: MonoBehaviour {
   // public static event System.Action onGameWon;
@@ -14,6 +14,9 @@ public class CounterDisplay: MonoBehaviour {
 
   void Start() {
     this.tmp = this.GetComponent<TextMeshProUGUI>();
+
+    Assert.IsNotNull(this.counter);
+    Assert.IsNotNull(this.tmp);
   }
 
   void Update() {

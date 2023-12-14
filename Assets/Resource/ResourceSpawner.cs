@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class ResourceSpawner: MonoBehaviour {
 
@@ -20,6 +21,7 @@ public class ResourceSpawner: MonoBehaviour {
   // public Vector3 maxPosition;
 
   void Start() {
+
     // this.camera = this.GetComponent<Camera>();
     this.camera = Camera.main;
 
@@ -31,6 +33,13 @@ public class ResourceSpawner: MonoBehaviour {
         0
       )
     );
+
+    Assert.IsNotNull(this.prefabToSpawn);
+    Assert.IsNotNull(this.resourceObjects);
+    Assert.IsNotNull(this.parentTransform);
+    Assert.IsNotNull(this.counter);
+    Assert.IsNotNull(this.camera);
+    Assert.AreNotEqual(this.cameraBounds, default(Bounds));
 
     this.SpawnGameObjects();
   }

@@ -1,28 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.Assertions;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Resource Controller")]
-public class ResourceController: ScriptableObject {
+public class ResourceController: MonoBehaviour {
 
-  public Counter counter;
+  public InteractEvent interactEvent;
 
-  // public UnityEvent<bool> gameWonEvent;
+  public PickUpEvent pickUpEvent;
 
-  private void OnEnable() {
-    this.pickUpEvent.e.AddListener(this.IncrementCounter);
+  public ResourceDisplay resourceDisplay;
+
+  void Start() {
+    this.resourceDisplay = this.GetComponent<ResourceDisplay>();
+
+    Assert.IsNotNull(this.interactEvent);
+    Assert.IsNotNull(this.pickUpEvent);
+    Assert.IsNotNull(this.resourceDisplay);
   }
 
-  private void OnDisable() {
-    this.pickUpEvent.e.RemoveListener(this.IncrementCounter);
+  void OnEnable() {
+    this.interactEvent.e.AddListener(this.HandleInteract);
   }
 
-  public void IncrementCounter() {
-    this.counter.Increment();
+  void OnDisable() {
+    this.interactEvent.e.RemoveListener(this.HandleInteract);
+  }
 
-    if (!this.counter.IsMax()) return;
+  public void HandleInteract(string name) {
+    string goName = this.resourceDisplay.gameObject.name;
 
-    print("Game won!");
-    this.gameWonEvent.e.Invoke();
+    if (name != goName) return;
+
+    Debug.Log($"[ResourceController#HandlePickUp] {goName}");
+    this.pickUpEvent.e.Invoke();
+    this.resourceDisplay.Die();
   }
 }
 

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/Counter")]
 public class Counter: ScriptableObject {
@@ -8,17 +7,18 @@ public class Counter: ScriptableObject {
   [Tooltip("Max count")]
   public int maxCount;
 
+  [Range(0, 1000)]
   public int count;
 
-  // private void OnEnable() {
-  //   // this.count = 0;
-  // }
+  private void OnEnable() {
+    this.count = 0;
+  }
 
   public void Increment() {
     this.count += 1;
   }
 
-  public void IsMax() {
-    return this.count >= this.maxCount;
+  public bool IsMax() {
+    return (this.count >= this.maxCount);
   }
 }

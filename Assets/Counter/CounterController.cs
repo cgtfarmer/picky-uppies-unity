@@ -1,8 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.Assertions;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Counter Controller")]
-public class CounterController: ScriptableObject {
+public class CounterController: MonoBehaviour {
 
   // public UnityEvent<int> catchCountChangeEvent;
   public PickUpEvent pickUpEvent;
@@ -13,23 +14,28 @@ public class CounterController: ScriptableObject {
 
   // public UnityEvent<bool> gameWonEvent;
 
-  private void OnEnable() {
-    // if (this.gameWonEvent == null) this.gameWonEvent = new UnityEvent<int>();
-    // if (catchCountChangeEvent == null) catchCountChangeEvent = new UnityEvent<int>();
+  void Start() {
+    Assert.IsNotNull(this.pickUpEvent);
+    Assert.IsNotNull(this.gameWonEvent);
+    Assert.IsNotNull(this.counter);
+  }
 
+  void OnEnable() {
     this.pickUpEvent.e.AddListener(this.IncrementCounter);
   }
 
-  private void OnDisable() {
+  void OnDisable() {
     this.pickUpEvent.e.RemoveListener(this.IncrementCounter);
   }
 
   public void IncrementCounter() {
+    print($"[CounterController#IncrementCounter]");
+
     this.counter.Increment();
 
     if (!this.counter.IsMax()) return;
 
-    print("Game won!");
+    print($"[CounterController#IncrementCounter] Counter is maxed");
     this.gameWonEvent.e.Invoke();
   }
 }

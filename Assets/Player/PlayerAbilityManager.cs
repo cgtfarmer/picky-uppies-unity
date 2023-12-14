@@ -1,30 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
-[RequireComponent(typeof(PlayerMovement))]
 public class PlayerAbilityManager: MonoBehaviour {
 
   public InteractEvent interactEvent;
-
-  public PickUpEvent pickUpEvent;
 
   public Player player;
 
   public LayerMask interactableLayers;
 
-  public Transform playerTransform;
+  void Start() {
+    Assert.IsNotNull(this.interactEvent);
+    Assert.IsNotNull(this.player);
 
-  private void Interact() {
-    print("[AttemptInteract]");
+    // Reference types can be null, Value types cannot - they default to a value (0?)
+    // LayerMask is a struct, which is a value type
+    // Assert.IsNotNull(this.interactableLayers);
 
+    Assert.AreNotEqual(this.interactableLayers, default(LayerMask));
+  }
+
+  public void Interact() {
     Collider2D intersection = Physics2D.OverlapCircle(
-      this.playerTransform.position, this.player.interactRadius, this.interactableLayers
+      this.transform.position, this.player.interactRadius, this.interactableLayers
     );
+
+    string intersectionName = intersection ? intersection?.gameObject?.name : "NONE";
+    print($"[PlayerAbilityManager#Interact] {intersectionName}");
 
     if (intersection == null) return;
 
-    this.pickUpEvent.e.Invoke(intersection.gameObject.name)
+    this.interactEvent.e.Invoke(intersectionName);
   }
 }
 
