@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceSpawner : MonoBehaviour {
+public class ResourceSpawner: MonoBehaviour {
 
-  public GameObject objectToSpawn;
+  public GameObject prefabToSpawn;
+
+  public Resource[] resourceObjects;
 
   public Transform parentTransform;
 
-  public int spawnCount;
+  public Counter counter;
 
   new private Camera camera;
 
@@ -34,25 +36,30 @@ public class ResourceSpawner : MonoBehaviour {
   }
 
   private void SpawnGameObjects() {
-    for (int i = 0; i < this.spawnCount; i++) {
+    for (int i = 0; i < this.counter.maxCount; i++) {
       GameObject go = Instantiate(
-        this.objectToSpawn,
+        this.prefabToSpawn,
         this.GetRandomPosition(),
         Quaternion.identity,
         this.parentTransform
       );
 
-      go.name = $"Resource {i}";
-      GameObject sprite = go.transform.Find("GFX").gameObject;
-      sprite.GetComponent<SpriteRenderer>().color = new Color(50, 50, 50);
+      go.name = $"Resource-{i}";
+      go.GetComponent<ResourceDisplay>().resource = this.GetRandomResourceObject();
     }
   }
 
   private Vector3 GetRandomPosition() {
     return new Vector3(
-      Random.Range(cameraBounds.min.x, cameraBounds.max.x),
-      Random.Range(cameraBounds.min.y, cameraBounds.max.y),
-      Random.Range(cameraBounds.min.z, cameraBounds.max.z)
+      Random.Range(this.cameraBounds.min.x, this.cameraBounds.max.x),
+      Random.Range(this.cameraBounds.min.y, this.cameraBounds.max.y),
+      Random.Range(this.cameraBounds.min.z, this.cameraBounds.max.z)
     );
+  }
+
+  private Resource GetRandomResourceObject() {
+    int randomIndex = Random.Range(0, this.resourceObjects.Length);
+
+    return this.resourceObjects[randomIndex];
   }
 }
