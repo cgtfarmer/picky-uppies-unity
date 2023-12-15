@@ -9,11 +9,15 @@ public class TimerController: MonoBehaviour {
 
   public Timer timer;
 
+  public bool autoStartTimer;
+
   void Start() {
     Assert.IsNotNull(this.gameWonEvent);
     Assert.IsNotNull(this.timer);
 
-    this.timer.Start();
+    if (this.autoStartTimer) {
+      this.timer.Start();
+    }
   }
 
   void OnEnable() {
