@@ -36,6 +36,10 @@ public class PlayerController: MonoBehaviour {
       Input.GetAxis("Horizontal"),
       Input.GetAxis("Vertical")
     );
+    // this.player.SetMovement(
+    //   Input.GetAxisRaw("Horizontal"),
+    //   Input.GetAxisRaw("Vertical")
+    // );
 
     if (Input.GetKeyDown(KeyCode.Space)) {
       this.Interact();
