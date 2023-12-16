@@ -13,7 +13,7 @@ public class ResourceSpawnerController: MonoBehaviour {
 
   public ResourceSpawner resourceSpawner;
 
-  new private Camera camera;
+  private Camera camera;
 
   private Bounds cameraBounds;
 

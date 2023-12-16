@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OrthographicPositionClamper: MonoBehaviour {
 
-  new public Camera camera;
+  public Camera camera;
   // private Vector2 screenBounds;
   // private SpriteRenderer spriteRenderer;
   // private Vector2 spriteExtents;
