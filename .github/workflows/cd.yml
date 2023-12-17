@@ -13,7 +13,7 @@ env:
 
 jobs:
   gh-pages-delivery:
-    name: Build and deliver static NextJS site to GitHub Pages
+    name: Build and deliver Unity WebGL game to GitHub Pages
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
